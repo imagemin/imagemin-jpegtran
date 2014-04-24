@@ -1,11 +1,8 @@
 'use strict';
 
-var execFile = require('child_process').execFile;
-var fs = require('fs');
+var ExecBuffer = require('exec-buffer');
 var imageType = require('image-type');
 var jpegtran = require('jpegtran-bin').path;
-var tempfile = require('tempfile');
-var rm = require('rimraf');
 
 /**
  * jpegtran image-min plugin
@@ -23,41 +20,21 @@ module.exports = function (opts) {
         }
 
         var args = ['-copy', 'none', '-optimize'];
-        var src = tempfile('.jpg');
-        var dest = tempfile('.jpg');
+        var exec = new ExecBuffer();
 
         if (opts.progressive) {
             args.push('-progressive');
         }
 
-        fs.writeFile(src, file.contents, function (err) {
-            if (err) {
-                return cb(err);
-            }
-
-            execFile(jpegtran, args.concat(['-outfile', dest, src]), function (err) {
+        exec
+            .use(jpegtran, args.concat(['-outfile', exec.dest(), exec.src()]))
+            .run(file.contents, function (err, buf) {
                 if (err) {
                     return cb(err);
                 }
 
-                fs.readFile(dest, function (err, buf) {
-                    rm(src, function (err) {
-                        if (err) {
-                            return cb(err);
-                        }
-
-                        rm(dest, function (err) {
-                            if (err) {
-                                return cb(err);
-                            }
-
-                            file.contents = buf;
-
-                            cb();
-                        });
-                    });
-                });
+                file.contents = buf;
+                cb();
             });
-        });
     };
 };
