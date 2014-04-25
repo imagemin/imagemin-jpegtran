@@ -22,6 +22,15 @@ var imagemin = new Imagemin()
 imagemin.optimize();
 ```
 
+## Options
+
+### progressive
+
+Type: `Boolean`  
+Default: `false`
+
+Lossless conversion to progressive.
+
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License) © [Kevin Mårtensson](https://github.com/kevva)
