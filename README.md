@@ -1,6 +1,6 @@
 # imagemin-jpegtran [![Build Status](https://travis-ci.org/kevva/imagemin-jpegtran.svg?branch=master)](https://travis-ci.org/kevva/imagemin-jpegtran)
 
-> jpegtran image-min plugin
+> jpegtran imagemin plugin
 
 ## Install
 
@@ -11,7 +11,7 @@ $ npm install --save imagemin-jpegtran
 ## Usage
 
 ```js
-var Imagemin = require('image-min');
+var Imagemin = require('imagemin');
 var jpegtran = require('imagemin-jpegtran');
 
 var imagemin = new Imagemin()
