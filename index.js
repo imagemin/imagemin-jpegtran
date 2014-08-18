@@ -1,7 +1,7 @@
 'use strict';
 
 var ExecBuffer = require('exec-buffer');
-var imageType = require('image-type');
+var isJpg = require('is-jpg');
 var jpegtran = require('jpegtran-bin').path;
 
 /**
@@ -15,7 +15,7 @@ module.exports = function (opts) {
     opts = opts || {};
 
     return function (file, imagemin, cb) {
-        if (imageType(file.contents) !== 'jpg') {
+        if (!isJpg(file.contents)) {
             return cb();
         }
 
