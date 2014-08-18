@@ -30,10 +30,10 @@
   "dependencies": {
     "exec-buffer": "^1.0.0",
     "is-jpg": "^1.0.0",
-    "jpegtran-bin": "^0.2.6"
+    "jpegtran-bin": "^1.0.0"
   },
   "devDependencies": {
     "ava": "0.0.4",
-    "imagemin": "^0.4.6"
+    "imagemin": "^1.0.0"
   }
 }
