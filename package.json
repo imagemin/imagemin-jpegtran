@@ -33,7 +33,7 @@
     "jpegtran-bin": "^0.2.6"
   },
   "devDependencies": {
-    "imagemin": "^0.4.6",
-    "mocha": "^1.19.0"
+    "ava": "0.0.4",
+    "imagemin": "^0.4.6"
   }
 }
