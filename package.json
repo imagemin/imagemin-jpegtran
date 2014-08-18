@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "jpegtran imagemin plugin",
   "license": "MIT",
-  "repository": "kevva/imagemin-jpegtran",
+  "repository": "imagemin/imagemin-jpegtran",
   "author": {
     "name": "Kevin Mårtensson",
     "email": "kevinmartensson@gmail.com",

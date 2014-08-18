@@ -1,12 +1,14 @@
-# imagemin-jpegtran [![Build Status](https://travis-ci.org/kevva/imagemin-jpegtran.svg?branch=master)](https://travis-ci.org/kevva/imagemin-jpegtran)
+# imagemin-jpegtran [![Build Status](https://travis-ci.org/imagemin/imagemin-jpegtran.svg?branch=master)](https://travis-ci.org/imagemin/imagemin-jpegtran)
 
 > jpegtran imagemin plugin
+
 
 ## Install
 
 ```bash
 $ npm install --save imagemin-jpegtran
 ```
+
 
 ## Usage
 
@@ -15,12 +17,13 @@ var Imagemin = require('imagemin');
 var jpegtran = require('imagemin-jpegtran');
 
 var imagemin = new Imagemin()
-    .src('foo.jpg')
-    .dest('foo-optimized.jpg')
-    .use(jpegtran({ progressive: true }));
+	.src('foo.jpg')
+	.dest('foo-optimized.jpg')
+	.use(jpegtran({ progressive: true }));
 
 imagemin.optimize();
 ```
+
 
 ## Options
 
@@ -31,6 +34,7 @@ Default: `false`
 
 Lossless conversion to progressive.
 
+
 ## License
 
-MIT © [Kevin Mårtensson](https://github.com/kevva)
+MIT © [imagemin](https://github.com/imagemin)
