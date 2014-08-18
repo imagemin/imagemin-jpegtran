@@ -15,6 +15,9 @@ describe('jpegtran()', function () {
             .src(path.join(__dirname, 'fixtures/test.jpg'))
             .use(jpegtran())
             .optimize(function (err, file) {
+                if (err) {
+                  return cb(err);
+                }
                 assert(file.contents.length < fs.statSync(imagemin.src()).size);
                 assert(file.contents.length > 0);
                 cb();
