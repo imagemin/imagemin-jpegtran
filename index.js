@@ -12,29 +12,31 @@ var jpegtran = require('jpegtran-bin').path;
  */
 
 module.exports = function (opts) {
-    opts = opts || {};
+	opts = opts || {};
 
-    return function (file, imagemin, cb) {
-        if (!isJpg(file.contents)) {
-            return cb();
-        }
+	return function (file, imagemin, cb) {
+		if (!isJpg(file.contents)) {
+			cb();
+			return;
+		}
 
-        var args = ['-copy', 'none', '-optimize'];
-        var exec = new ExecBuffer();
+		var args = ['-copy', 'none', '-optimize'];
+		var exec = new ExecBuffer();
 
-        if (opts.progressive) {
-            args.push('-progressive');
-        }
+		if (opts.progressive) {
+			args.push('-progressive');
+		}
 
-        exec
-            .use(jpegtran, args.concat(['-outfile', exec.dest(), exec.src()]))
-            .run(file.contents, function (err, buf) {
-                if (err) {
-                    return cb(err);
-                }
+		exec
+			.use(jpegtran, args.concat(['-outfile', exec.dest(), exec.src()]))
+			.run(file.contents, function (err, buf) {
+				if (err) {
+					cb(err);
+					return;
+				}
 
-                file.contents = buf;
-                cb();
-            });
-    };
+				file.contents = buf;
+				cb();
+			});
+	};
 };
