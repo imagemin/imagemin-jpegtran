@@ -1,4 +1,4 @@
-# imagemin-jpegtran [![Build Status](http://img.shields.io/travis/imagemin/imagemin-jpegtran.svg?style=flat)](https://travis-ci.org/imagemin/imagemin-jpegtran)
+# imagemin-jpegtran [![Build Status](http://img.shields.io/travis/imagemin/imagemin-jpegtran.svg?style=flat)](https://travis-ci.org/imagemin/imagemin-jpegtran) [![Build status](https://ci.appveyor.com/api/projects/status/rwf4by6qcbne1qet)](https://ci.appveyor.com/project/ShinnosukeWatanabe/imagemin-jpegtran)
 
 > jpegtran imagemin plugin
 
