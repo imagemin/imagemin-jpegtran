@@ -28,7 +28,6 @@
     "optimize"
   ],
   "dependencies": {
-    "exec-buffer": "^1.0.0",
     "is-jpg": "^1.0.0",
     "jpegtran-bin": "^1.0.0"
   },
