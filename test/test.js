@@ -24,3 +24,15 @@ test('should optimize a JPG', function (t) {
 	});
 });
 
+test('should fail when a JPG is corrupt', function (t) {
+	t.plan(2);
+
+	var imagemin = new Imagemin()
+		.src(path.join(__dirname, 'fixtures/test-corrupt.jpg'))
+		.use(jpegtran());
+		
+	imagemin.optimize(function (err) {
+		t.assert(err);
+		t.assert(/Corrupt JPEG data/.test(err.message));
+	});
+});
