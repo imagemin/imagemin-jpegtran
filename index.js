@@ -1,8 +1,8 @@
 'use strict';
 
-var ExecBuffer = require('exec-buffer');
 var isJpg = require('is-jpg');
 var jpegtran = require('jpegtran-bin').path;
+var spawn = require('child_process').spawn;
 
 /**
  * jpegtran image-min plugin
@@ -21,22 +21,35 @@ module.exports = function (opts) {
 		}
 
 		var args = ['-copy', 'none', '-optimize'];
-		var exec = new ExecBuffer();
 
 		if (opts.progressive) {
 			args.push('-progressive');
 		}
 
-		exec
-			.use(jpegtran, args.concat(['-outfile', exec.dest(), exec.src()]))
-			.run(file.contents, function (err, buf) {
-				if (err) {
-					cb(err);
-					return;
-				}
+		var cp = spawn(jpegtran, args, {stdio: ['pipe', null, null]});
+    
+		var imageBuffer = [];
+		var errorBuffer = [];
 
-				file.contents = buf;
-				cb();
-			});
-	};
+		cp.stdout.on('data', function(data) {
+			imageBuffer.push(data);
+		});
+
+		cp.stderr.on('data', function(data) {
+			errorBuffer.push(data);
+		});
+
+		cp.on('close', function() {
+			if (errorBuffer.length) {
+				cb(new Error(Buffer.concat(errorBuffer)));
+				return;
+			}
+  
+			file.contents = Buffer.concat(imageBuffer);
+			cb();
+		});
+
+		cp.stdin.write(file.contents);
+		cp.stdin.end();
+	}
 };
