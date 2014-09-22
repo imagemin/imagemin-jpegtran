@@ -58,7 +58,10 @@ module.exports = function (opts) {
 		});
 
 		cp.on('close', function () {
-			file.contents = Buffer.concat(ret, len);
+			if (len < file.contents.length) {
+				file.contents = Buffer.concat(ret, len);
+			}
+
 			cb(null, file);
 		});
 
