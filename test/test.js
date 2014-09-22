@@ -1,25 +1,22 @@
 'use strict';
 
-var File = require('vinyl');
-var fs = require('fs');
 var isJpg = require('is-jpg');
 var jpegtran = require('../');
 var path = require('path');
+var read = require('vinyl-file').read;
 var test = require('ava');
 
 test('optimize a JPG', function (t) {
 	t.plan(3);
 
-	fs.readFile(path.join(__dirname, 'fixtures/test.jpg'), function (err, buf) {
+	read(path.join(__dirname, 'fixtures/test.jpg'), function (err, file) {
 		t.assert(!err);
 
 		var stream = jpegtran();
-		var file = new File({
-			contents: buf
-		});
+		var size = file.contents.length;
 
 		stream.on('data', function (data) {
-			t.assert(data.contents.length < buf.length);
+			t.assert(data.contents.length < size);
 			t.assert(isJpg(data.contents));
 		});
 
