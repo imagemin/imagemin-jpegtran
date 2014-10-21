@@ -29,10 +29,12 @@ test('optimize a JPG', function (t) {
 test('optimize a JPG using ctor', function (t) {
 	t.plan(3);
 
+	var Jpegtran = jpegtran.ctor();
+
 	read(path.join(__dirname, 'fixtures/test.jpg'), function (err, file) {
 		t.assert(!err);
 
-		var stream = jpegtran.ctor();
+		var stream = new Jpegtran();
 		var size = file.contents.length;
 
 		stream.on('data', function (data) {
