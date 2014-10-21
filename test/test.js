@@ -12,7 +12,7 @@ test('optimize a JPG', function (t) {
 	t.plan(3);
 
 	read(path.join(__dirname, 'fixtures/test.jpg'), function (err, file) {
-		t.assert(!err);
+		t.assert(!err, err);
 
 		var stream = jpegtran();
 		var size = file.contents.length;
@@ -32,7 +32,7 @@ test('optimize a JPG using ctor', function (t) {
 	var Jpegtran = jpegtran.ctor();
 
 	read(path.join(__dirname, 'fixtures/test.jpg'), function (err, file) {
-		t.assert(!err);
+		t.assert(!err, err);
 
 		var stream = new Jpegtran();
 		var size = file.contents.length;
@@ -63,7 +63,7 @@ test('throw error when a JPG is corrupt', function (t) {
 	t.plan(3);
 
 	read(path.join(__dirname, 'fixtures/test-corrupt.jpg'), function (err, file) {
-		t.assert(!err);
+		t.assert(!err, err);
 
 		var stream = jpegtran();
 
