@@ -93,7 +93,9 @@ module.exports = function (opts) {
 module.exports.ctor = function (opts) {
 	opts = opts || {};
 
-	return through.ctor({ objectMode: true }, function (file, enc, cb) {
+	var A = through.ctor({ objectMode: true }, function (file, enc, cb) {
 		plugin(file, enc, opts, cb);
 	});
+
+	return new A();
 };
