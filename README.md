@@ -19,7 +19,7 @@ var jpegtran = require('imagemin-jpegtran');
 var imagemin = new Imagemin()
 	.src('images/*.jpg')
 	.dest('build/images')
-	.use(jpegtran());
+	.use(jpegtran({ progressive: true }));
 
 imagemin.run(function (err, files) {
 	if (err) {
@@ -38,7 +38,7 @@ var jpegtran = require('imagemin-jpegtran');
 
 gulp.task('default', function () {
 	return gulp.src('images/*.jpg')
-		.pipe(jpegtran())
+		.pipe(jpegtran({ progressive: true })())
 		.pipe(gulp.dest('build/images'));
 });
 ```
