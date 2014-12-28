@@ -22,6 +22,10 @@ test('optimize a JPG', function (t) {
 			t.assert(isJpg(data.contents));
 		});
 
+		stream.on('error', function(err) {
+			t.assert(!err, err);
+		});
+
 		stream.end(file);
 	});
 });
@@ -34,6 +38,10 @@ test('skip optimizing an already optimized JPG', function (t) {
 
 	stream.on('data', function (data) {
 		t.assert(bufferEqual(data.contents, file.contents));
+	});
+
+	stream.on('error', function(err) {
+		t.assert(!err, err);
 	});
 
 	stream.end(file);
