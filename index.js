@@ -34,6 +34,7 @@ module.exports = function (opts) {
 		var args = ['-copy', 'none', '-optimize'];
 		var ret = [];
 		var len = 0;
+		var err = '';
 
 		if (opts.progressive) {
 			args.push('-progressive');
@@ -41,15 +42,11 @@ module.exports = function (opts) {
 
 		var cp = spawn(jpegtran, args);
 
-		cp.on('error', function (err) {
-			cb(err);
-			return;
-		});
+		cp.on('error', cb);
 
 		cp.stderr.setEncoding('utf8');
 		cp.stderr.on('data', function (data) {
-			cb(new Error(data));
-			return;
+			err += data;
 		});
 
 		cp.stdout.on('data', function (data) {
@@ -58,11 +55,22 @@ module.exports = function (opts) {
 		});
 
 		cp.on('close', function () {
+			if (err) {
+				cb(new Error(err));
+				return;
+			}
+
 			if (len < file.contents.length) {
 				file.contents = Buffer.concat(ret, len);
 			}
 
 			cb(null, file);
+		});
+
+		cp.stdin.on('error', function (stdinErr) {
+			if (!err) {
+				err = stdinErr;
+			}
 		});
 
 		cp.stdin.end(file.contents);
