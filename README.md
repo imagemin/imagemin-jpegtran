@@ -53,6 +53,13 @@ Default: `false`
 
 Lossless conversion to progressive.
 
+### arithmetic
+
+Type: `Boolean`  
+Default: `false`
+
+Use [arithmetic coding](http://en.wikipedia.org/wiki/Arithmetic_coding).
+
 
 ## License
 

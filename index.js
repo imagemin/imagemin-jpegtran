@@ -40,6 +40,10 @@ module.exports = function (opts) {
 			args.push('-progressive');
 		}
 
+		if (opts.arithmetic) {
+			args.push('-arithmetic');
+		}
+
 		var cp = spawn(jpegtran, args);
 
 		cp.on('error', cb);
