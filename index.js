@@ -5,13 +5,6 @@ var jpegtran = require('jpegtran-bin').path;
 var spawn = require('child_process').spawn;
 var through = require('through2');
 
-/**
- * jpegtran imagemin plugin
- *
- * @param {Object} opts
- * @api public
- */
-
 module.exports = function (opts) {
 	opts = opts || {};
 
