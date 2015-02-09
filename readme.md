@@ -19,14 +19,14 @@ var jpegtran = require('imagemin-jpegtran');
 var imagemin = new Imagemin()
 	.src('images/*.jpg')
 	.dest('build/images')
-	.use(jpegtran({ progressive: true }));
+	.use(jpegtran({progressive: true}));
 
 imagemin.run(function (err, files) {
 	if (err) {
 		throw err;
 	}
 
-	console.log('Files optimized successfully!'); 
+	console.log('Files optimized successfully!');
 });
 ```
 
@@ -38,7 +38,7 @@ var jpegtran = require('imagemin-jpegtran');
 
 gulp.task('default', function () {
 	return gulp.src('images/*.jpg')
-		.pipe(jpegtran({ progressive: true })())
+		.pipe(jpegtran({progressive: true})())
 		.pipe(gulp.dest('build/images'));
 });
 ```
