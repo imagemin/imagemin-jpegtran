@@ -1,8 +1,8 @@
 'use strict';
 
+var spawn = require('child_process').spawn;
 var isJpg = require('is-jpg');
 var jpegtran = require('jpegtran-bin').path;
-var spawn = require('child_process').spawn;
 var through = require('through2');
 
 module.exports = function (opts) {
@@ -39,8 +39,6 @@ module.exports = function (opts) {
 
 		var cp = spawn(jpegtran, args);
 
-		cp.on('error', cb);
-
 		cp.stderr.setEncoding('utf8');
 		cp.stderr.on('data', function (data) {
 			err += data;
@@ -51,6 +49,7 @@ module.exports = function (opts) {
 			len += data.length;
 		});
 
+		cp.on('error', cb);
 		cp.on('close', function () {
 			if (err) {
 				cb(new Error(err));

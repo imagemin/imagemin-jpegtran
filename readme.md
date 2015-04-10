@@ -5,7 +5,7 @@
 
 ## Install
 
-```bash
+```
 $ npm install --save imagemin-jpegtran
 ```
 
@@ -14,48 +14,43 @@ $ npm install --save imagemin-jpegtran
 
 ```js
 var Imagemin = require('imagemin');
-var jpegtran = require('imagemin-jpegtran');
+var imageminJpegtran = require('imagemin-jpegtran');
 
-var imagemin = new Imagemin()
+new Imagemin()
 	.src('images/*.jpg')
 	.dest('build/images')
-	.use(jpegtran({progressive: true}));
-
-imagemin.run(function (err, files) {
-	if (err) {
-		throw err;
-	}
-
-	console.log('Files optimized successfully!');
-});
+	.use(imageminJpegtran({progressive: true}))
+	.run();
 ```
 
 You can also use this plugin with [gulp](http://gulpjs.com):
 
 ```js
 var gulp = require('gulp');
-var jpegtran = require('imagemin-jpegtran');
+var imageminJpegtran = require('imagemin-jpegtran');
 
 gulp.task('default', function () {
 	return gulp.src('images/*.jpg')
-		.pipe(jpegtran({progressive: true})())
+		.pipe(imageminJpegtran({progressive: true})())
 		.pipe(gulp.dest('build/images'));
 });
 ```
 
 
-## Options
+## API
 
-### progressive
+### imageminJpegtran(options)
 
-Type: `Boolean`  
+#### options.progressive
+
+Type: `boolean`  
 Default: `false`
 
 Lossless conversion to progressive.
 
-### arithmetic
+#### options.arithmetic
 
-Type: `Boolean`  
+Type: `boolean`  
 Default: `false`
 
 Use [arithmetic coding](http://en.wikipedia.org/wiki/Arithmetic_coding).
