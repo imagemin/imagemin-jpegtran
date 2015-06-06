@@ -2,7 +2,7 @@
 
 var spawn = require('child_process').spawn;
 var isJpg = require('is-jpg');
-var jpegtran = require('jpegtran-bin').path;
+var jpegtran = require('jpegtran-bin');
 var through = require('through2');
 
 module.exports = function (opts) {
