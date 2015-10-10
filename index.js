@@ -56,15 +56,17 @@ module.exports = function (opts) {
 		});
 
 		cp.on('close', function () {
-			if (err) {
-				err = new Error(err);
+			var contents = Buffer.concat(ret, len);
+
+			if (err && (err.code !== 'EPIPE' || !isJpg(buffer))) {
+				err = typeof err === 'string' ? new Error(err) : err;
 				err.fileName = file.path;
 				cb(err);
 				return;
 			}
 
 			if (len < file.contents.length) {
-				file.contents = Buffer.concat(ret, len);
+				file.contents = contents;
 			}
 
 			cb(null, file);
