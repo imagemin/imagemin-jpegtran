@@ -13,8 +13,8 @@ $ npm install --save imagemin-jpegtran
 ## Usage
 
 ```js
-var Imagemin = require('imagemin');
-var imageminJpegtran = require('imagemin-jpegtran');
+const Imagemin = require('imagemin');
+const imageminJpegtran = require('imagemin-jpegtran');
 
 new Imagemin()
 	.src('images/*.jpg')
@@ -26,10 +26,10 @@ new Imagemin()
 You can also use this plugin with [gulp](http://gulpjs.com):
 
 ```js
-var gulp = require('gulp');
-var imageminJpegtran = require('imagemin-jpegtran');
+const gulp = require('gulp');
+const imageminJpegtran = require('imagemin-jpegtran');
 
-gulp.task('default', function () {
+gulp.task('default', () => {
 	return gulp.src('images/*.jpg')
 		.pipe(imageminJpegtran({progressive: true})())
 		.pipe(gulp.dest('build/images'));
