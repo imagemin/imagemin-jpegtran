@@ -58,7 +58,7 @@ module.exports = function (opts) {
 		cp.on('close', function () {
 			var contents = Buffer.concat(ret, len);
 
-			if (err && (err.code !== 'EPIPE' || !isJpg(buffer))) {
+			if (err && (err.code !== 'EPIPE' || !isJpg(contents))) {
 				err = typeof err === 'string' ? new Error(err) : err;
 				err.fileName = file.path;
 				cb(err);
