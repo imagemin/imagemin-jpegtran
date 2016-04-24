@@ -1,66 +1,30 @@
 'use strict';
-
+var fs = require('fs');
 var path = require('path');
-var bufferEqual = require('buffer-equal');
 var isJpg = require('is-jpg');
-var read = require('vinyl-file').read;
+var pify = require('pify');
 var test = require('ava');
-var vinylSmallestJpeg = require('vinyl-smallest-jpeg');
 var imageminJpegtran = require('../');
+var fsP = pify(fs);
 
 test('optimize a JPG', function (t) {
-	t.plan(3);
+	t.plan(2);
 
-	read(path.join(__dirname, 'fixtures/test.jpg'), function (err, file) {
-		t.assert(!err, err);
-
-		var stream = imageminJpegtran()();
-		var size = file.contents.length;
-
-		stream.on('data', function (data) {
-			t.assert(data.contents.length < size, data.contents.length);
-			t.assert(isJpg(data.contents));
+	fsP.readFile(path.join(__dirname, 'fixtures/test.jpg')).then(function (buf) {
+		imageminJpegtran()(buf).then(function (data) {
+			t.assert(data.length < buf.length, data.length);
+			t.assert(isJpg(data));
 		});
-
-		stream.on('error', function (err) {
-			t.assert(!err, err);
-		});
-
-		stream.end(file);
 	});
-});
-
-test('skip optimizing an already optimized JPG', function (t) {
-	t.plan(1);
-
-	var file = vinylSmallestJpeg();
-	var stream = imageminJpegtran()();
-
-	stream.on('data', function (data) {
-		t.assert(bufferEqual(data.contents, file.contents));
-	});
-
-	stream.on('error', function (err) {
-		t.assert(!err, err);
-	});
-
-	stream.end(file);
 });
 
 test('throw error when a JPG is corrupt', function (t) {
-	t.plan(4);
+	t.plan(2);
 
-	read(path.join(__dirname, 'fixtures/test-corrupt.jpg'), function (err, file) {
-		t.assert(!err, err);
-
-		var stream = imageminJpegtran()();
-
-		stream.on('error', function (err) {
+	fsP.readFile(path.join(__dirname, 'fixtures/test-corrupt.jpg')).then(function (buf) {
+		imageminJpegtran()(buf).catch(function (err) {
 			t.assert(err, err);
-			t.assert(path.basename(err.fileName) === 'test-corrupt.jpg', err.fileName);
-			t.assert(/Corrupt/.test(err.message), err.message);
+			t.assert(/Corrupt JPEG data/.test(err.message), err.message);
 		});
-
-		stream.end(file);
 	});
 });

@@ -1,83 +1,40 @@
 'use strict';
+const execBuffer = require('exec-buffer');
+const isJpg = require('is-jpg');
+const jpegtran = require('jpegtran-bin');
 
-var spawn = require('child_process').spawn;
-var isJpg = require('is-jpg');
-var jpegtran = require('jpegtran-bin');
-var through = require('through2');
+module.exports = opts => buf => {
+	opts = Object.assign({}, opts);
 
-module.exports = function (opts) {
-	opts = opts || {};
+	if (!Buffer.isBuffer(buf)) {
+		return Promise.reject(new TypeError('Expected a buffer'));
+	}
 
-	return through.ctor({objectMode: true}, function (file, enc, cb) {
-		if (file.isNull()) {
-			cb(null, file);
-			return;
-		}
+	if (!isJpg(buf)) {
+		return Promise.resolve(buf);
+	}
 
-		if (file.isStream()) {
-			cb(new Error('Streaming is not supported'));
-			return;
-		}
+	const args = [
+		'-copy', 'none',
+		'-optimize',
+		'-outfile', execBuffer.output,
+		execBuffer.input
+	];
 
-		if (!isJpg(file.contents)) {
-			cb(null, file);
-			return;
-		}
+	if (opts.progressive) {
+		args.push('-progressive');
+	}
 
-		var args = ['-copy', 'none', '-optimize'];
-		var ret = [];
-		var len = 0;
-		var err = '';
+	if (opts.arithmetic) {
+		args.push('-arithmetic');
+	}
 
-		if (opts.progressive) {
-			args.push('-progressive');
-		}
-
-		if (opts.arithmetic) {
-			args.push('-arithmetic');
-		}
-
-		var cp = spawn(jpegtran, args);
-
-		cp.stderr.setEncoding('utf8');
-		cp.stderr.on('data', function (data) {
-			err += data;
-		});
-
-		cp.stdout.on('data', function (data) {
-			ret.push(data);
-			len += data.length;
-		});
-
-		cp.on('error', function (err) {
-			err.fileName = file.path;
-			cb(err);
-			return;
-		});
-
-		cp.on('close', function () {
-			var contents = Buffer.concat(ret, len);
-
-			if (err && (err.code !== 'EPIPE' || !isJpg(contents))) {
-				err = typeof err === 'string' ? new Error(err) : err;
-				err.fileName = file.path;
-				cb(err);
-				return;
-			}
-
-			if (len < file.contents.length) {
-				file.contents = contents;
-			}
-
-			cb(null, file);
-		});
-
-		cp.stdin.on('error', function (stdinErr) {
-			if (!err) {
-				err = stdinErr;
-			}
-		});
-
-		cp.stdin.end(file.contents);
+	return execBuffer({
+		input: buf,
+		bin: jpegtran,
+		args
+	}).catch(err => {
+		err.message = err.stderr || err.message;
+		throw err;
 	});
 };

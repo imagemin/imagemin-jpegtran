@@ -1,22 +1,19 @@
-build: off
-shallow_clone: true
-version: '{build}'
-skip_tags: true
-
 environment:
   matrix:
     - nodejs_version: '5'
-    - nodejs_version: '0'
-    - nodejs_version: '0.10'
-
+    - nodejs_version: '4'
 install:
   - ps: Install-Product node $env:nodejs_version
-  - npm install --global npm@latest
+  - set CI=true
+  - npm -g install npm@latest
+  - set PATH=%APPDATA%\npm;%PATH%
   - npm install
-
 matrix:
   fast_finish: true
-
+build: off
+version: '{build}'
+shallow_clone: true
+clone_depth: 1
 test_script:
   - node --version
   - npm --version
