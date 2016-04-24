@@ -24,31 +24,31 @@ imagemin('images/*.jpg', 'build/images', {use: [imageminJpegtran()]}).then(() =>
 
 ## API
 
-### imageminJpegtran(buffer, options)
+### imageminJpegtran([options])(buffer)
 
 Returns a promise for a buffer.
-
-#### buffer
-
-Type: `buffer`
-
-Buffer to optimize.
 
 #### options
 
 ##### progressive
 
-Type: `boolean`
+Type: `boolean`<br>
 Default: `false`
 
 Lossless conversion to progressive.
 
 ##### arithmetic
 
-Type: `boolean`
+Type: `boolean`<br>
 Default: `false`
 
 Use [arithmetic coding](http://en.wikipedia.org/wiki/Arithmetic_coding).
+
+#### buffer
+
+Type: `buffer`
+
+Buffer to optimize.
 
 
 ## License
