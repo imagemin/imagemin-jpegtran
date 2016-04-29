@@ -13,47 +13,42 @@ $ npm install --save imagemin-jpegtran
 ## Usage
 
 ```js
-const Imagemin = require('imagemin');
+const imagemin = require('imagemin');
 const imageminJpegtran = require('imagemin-jpegtran');
 
-new Imagemin()
-	.src('images/*.jpg')
-	.dest('build/images')
-	.use(imageminJpegtran({progressive: true}))
-	.run();
-```
-
-You can also use this plugin with [gulp](http://gulpjs.com):
-
-```js
-const gulp = require('gulp');
-const imageminJpegtran = require('imagemin-jpegtran');
-
-gulp.task('default', () => {
-	return gulp.src('images/*.jpg')
-		.pipe(imageminJpegtran({progressive: true})())
-		.pipe(gulp.dest('build/images'));
+imagemin(['images/*.jpg'], 'build/images', {use: [imageminJpegtran()]}).then(() => {
+	console.log('Images optimized');
 });
 ```
 
 
 ## API
 
-### imageminJpegtran(options)
+### imageminJpegtran([options])(buffer)
 
-#### options.progressive
+Returns a promise for a buffer.
 
-Type: `boolean`  
+#### options
+
+##### progressive
+
+Type: `boolean`<br>
 Default: `false`
 
 Lossless conversion to progressive.
 
-#### options.arithmetic
+##### arithmetic
 
-Type: `boolean`  
+Type: `boolean`<br>
 Default: `false`
 
 Use [arithmetic coding](http://en.wikipedia.org/wiki/Arithmetic_coding).
+
+#### buffer
+
+Type: `buffer`
+
+Buffer to optimize.
 
 
 ## License
