@@ -22,11 +22,11 @@ module.exports = opts => buf => {
 	];
 
 	if (opts.progressive) {
-		args.push('-progressive');
+		args.splice(0, 0, '-progressive');
 	}
 
 	if (opts.arithmetic) {
-		args.push('-arithmetic');
+		args.splice(0, 0, '-arithmetic');
 	}
 
 	return execBuffer({
