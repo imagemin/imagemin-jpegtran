@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "ava": "*",
+    "is-progressive": "^3.0.0",
     "pify": "^2.3.0",
     "xo": "*"
   },
