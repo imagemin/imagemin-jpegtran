@@ -14,10 +14,7 @@ module.exports = opts => buf => {
 		return Promise.resolve(buf);
 	}
 
-	const args = [
-		'-copy', 'none',
-		'-optimize'
-	];
+	const args = ['-copy', 'none'];
 
 	if (opts.progressive) {
 		args.push('-progressive');
@@ -25,6 +22,8 @@ module.exports = opts => buf => {
 
 	if (opts.arithmetic) {
 		args.push('-arithmetic');
+	} else {
+		args.push('-optimize');
 	}
 
 	args.push('-outfile', execBuffer.output, execBuffer.input);
