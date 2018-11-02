@@ -32,8 +32,8 @@ module.exports = opts => buf => {
 		input: buf,
 		bin: jpegtran,
 		args
-	}).catch(err => {
-		err.message = err.stderr || err.message;
-		throw err;
+	}).catch(error => {
+		error.message = error.stderr || error.message;
+		throw error;
 	});
 };

@@ -4,7 +4,7 @@ import isJpg from 'is-jpg';
 import isProgressive from 'is-progressive';
 import pify from 'pify';
 import test from 'ava';
-import m from './';
+import m from '.';
 
 const fsP = pify(fs);
 
@@ -17,7 +17,7 @@ test('optimize a JPG', async t => {
 
 test('throw error when a JPG is corrupt', async t => {
 	const buf = await fsP.readFile(path.join(__dirname, 'fixture-corrupt.jpg'));
-	t.throws(m()(buf), /Corrupt JPEG data/);
+	await t.throws(m()(buf), /Corrupt JPEG data/);
 });
 
 test('progressive option', async t => {
