@@ -3,8 +3,8 @@ const execBuffer = require('exec-buffer');
 const isJpg = require('is-jpg');
 const jpegtran = require('jpegtran-bin');
 
-module.exports = opts => buf => {
-	opts = Object.assign({}, opts);
+module.exports = options => buf => {
+	options = {...options};
 
 	if (!Buffer.isBuffer(buf)) {
 		return Promise.reject(new TypeError('Expected a buffer'));
@@ -16,11 +16,11 @@ module.exports = opts => buf => {
 
 	const args = ['-copy', 'none'];
 
-	if (opts.progressive) {
+	if (options.progressive) {
 		args.push('-progressive');
 	}
 
-	if (opts.arithmetic) {
+	if (options.arithmetic) {
 		args.push('-arithmetic');
 	} else {
 		args.push('-optimize');
