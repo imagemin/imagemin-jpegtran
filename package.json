@@ -21,7 +21,7 @@
     }
   ],
   "engines": {
-    "node": ">=6"
+    "node": ">=10"
   },
   "scripts": {
     "test": "xo && ava"
@@ -43,15 +43,11 @@
   "dependencies": {
     "exec-buffer": "^3.0.0",
     "is-jpg": "^2.0.0",
-    "jpegtran-bin": "^4.0.0"
+    "jpegtran-bin": "^5.0.0"
   },
   "devDependencies": {
-    "ava": "^1.0.1",
+    "ava": "^3.8.0",
     "is-progressive": "^3.0.0",
-    "pify": "^4.0.0",
-    "xo": "^0.23.0"
-  },
-  "xo": {
-    "esnext": true
+    "xo": "^0.30.0"
   }
 }
