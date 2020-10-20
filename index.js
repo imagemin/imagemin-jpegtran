@@ -4,7 +4,10 @@ const isJpg = require('is-jpg');
 const jpegtran = require('jpegtran-bin');
 
 module.exports = options => buf => {
-	options = {...options};
+	options = {
+		strip: false,
+		...options
+	};
 
 	if (!Buffer.isBuffer(buf)) {
 		return Promise.reject(new TypeError('Expected a buffer'));
@@ -14,10 +17,22 @@ module.exports = options => buf => {
 		return Promise.resolve(buf);
 	}
 
-	const args = ['-copy', 'none'];
+	const args = [];
 
 	if (options.progressive) {
 		args.push('-progressive');
+	}
+
+	if (options.grayscale) {
+		args.push('-grayscale');
+	}
+
+	if (options.strip) {
+		args.push('-copy');
+		args.push('none');
+	} else {
+		args.push('-copy');
+		args.push('all');
 	}
 
 	if (options.arithmetic) {
