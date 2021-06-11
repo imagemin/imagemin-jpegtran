@@ -1,14 +1,12 @@
-# imagemin-jpegtran ![GitHub Actions Status](https://github.com/imagemin/imagemin-jpegtran/workflows/test/badge.svg?branch=master)
+# imagemin-jpegtran
 
 > jpegtran imagemin plugin
-
 
 ## Install
 
 ```
 $ npm install --save imagemin-jpegtran
 ```
-
 
 ## Usage
 
@@ -28,25 +26,26 @@ const imageminJpegtran = require('imagemin-jpegtran');
 })();
 ```
 
-
 ## API
 
-### imageminJpegtran([options])(buffer)
+### imageminJpegtran(options?)(buffer)
 
 Returns a promise for a buffer.
 
 #### options
 
+Type: `object`
+
 ##### progressive
 
-Type: `boolean`<br>
+Type: `boolean`\
 Default: `false`
 
 Lossless conversion to progressive.
 
 ##### arithmetic
 
-Type: `boolean`<br>
+Type: `boolean`\
 Default: `false`
 
 Use [arithmetic coding](http://en.wikipedia.org/wiki/Arithmetic_coding).
@@ -56,8 +55,3 @@ Use [arithmetic coding](http://en.wikipedia.org/wiki/Arithmetic_coding).
 Type: `buffer`
 
 Buffer to optimize.
-
-
-## License
-
-MIT © [imagemin](https://github.com/imagemin)
