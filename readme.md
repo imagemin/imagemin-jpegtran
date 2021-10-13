@@ -19,11 +19,12 @@ const imageminJpegtran = require('imagemin-jpegtran');
 	await imagemin(['images/*.jpg'], {
 		destination: 'build/images',
 		plugins: [
-			imageminJpegtran()]})
-		});
+			imageminJpegtran()
+		]
+	});
 		
 	console.log('Images optimized');
-();
+})();
 ```
 
 ## API
