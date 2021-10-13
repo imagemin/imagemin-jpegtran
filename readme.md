@@ -11,19 +11,18 @@ $ npm install --save imagemin-jpegtran
 ## Usage
 
 ```js
-const imagemin = require('imagemin');
 const imageminJpegtran = require('imagemin-jpegtran');
 
 (async () => {
-	await imagemin(['images/*.jpg'], {
-		destination: 'build/images',
-		plugins: [
-			imageminJpegtran()
-		]
-	});
+  const imagemin = (await import('imagemin')).default;
 
-	console.log('Images optimized');
-})();
+  await imagemin(['images/*.jpg'], {
+    destination: 'build/images',
+    plugins: [
+        imageminJpegtran()
+    ]})
+  })
+();
 ```
 
 ## API
