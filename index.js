@@ -1,9 +1,9 @@
-'use strict';
-const execBuffer = require('exec-buffer');
-const isJpg = require('is-jpg');
-const jpegtran = require('jpegtran-bin');
+import {Buffer} from 'node:buffer';
+import execBuffer from 'exec-buffer';
+import isJpg from 'is-jpg';
+import jpegtran from 'jpegtran-bin';
 
-module.exports = options => buf => {
+const min = options => buf => {
 	options = {...options};
 
 	if (!Buffer.isBuffer(buf)) {
@@ -31,9 +31,11 @@ module.exports = options => buf => {
 	return execBuffer({
 		input: buf,
 		bin: jpegtran,
-		args
+		args,
 	}).catch(error => {
 		error.message = error.stderr || error.message;
 		throw error;
 	});
 };
+
+export default min;
